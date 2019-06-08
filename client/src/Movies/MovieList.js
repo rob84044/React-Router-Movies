@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import './movies.css';
 export default class MovieList extends Component {
   constructor(props) {
     super(props);

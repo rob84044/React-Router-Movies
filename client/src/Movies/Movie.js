@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Route, Link, NavLink } from 'react-router-dom';
+
+import Actors from './Actors';
 
 export default class Movie extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: null
+      movie: null,
+      hiddenToggle: true
     };
   }
 
@@ -43,8 +47,11 @@ export default class Movie extends Component {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
     }
-
-    const { title, director, metascore, stars } = this.state.movie;
+    const toggleActors = e => {
+      e.preventDefault();
+      this.history.push('/movies/:id');
+    };
+    const { title, director, metascore, stars, id } = this.state.movie;
     return (
       <div className="save-wrapper">
         <div className="movie-card">
@@ -55,13 +62,27 @@ export default class Movie extends Component {
           <div className="movie-metascore">
             Metascore: <strong>{metascore}</strong>
           </div>
-          <h3>Actors</h3>
+          <nav className="movie-star">
+            <NavLink to={`/movies/${id}/actors`} onClick={this.toggleActors}>
+              <h3>Actors</h3>
+            </NavLink>
+          </nav>
 
-          {stars.map(star => (
+          <Route exact path="/movies/:id" />
+
+          {this.state.toggle && <Route exact path="/movies/:id" />}
+
+          <Route
+            exact
+            path="/movies/:id/actors"
+            render={props => <Actors {...props} stars={stars} />}
+          />
+
+          {/* {stars.map(star => (
             <div key={star} className="movie-star">
               {star}
             </div>
-          ))}
+          ))} */}
         </div>
         <div className="save-button">Save</div>
       </div>
