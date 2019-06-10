@@ -13,10 +13,14 @@ export default class SavedList extends Component {
         {this.props.list.map(movie => (
           <span className="saved-movie">{movie.title}</span>
         ))}
-        <Link to={'/'}>
-          <div className="home-button">Home</div>
-        </Link>
+
+        <div onClick={routeToHome} className="home-button">
+          Home
+        </div>
       </div>
     );
+    function routeToHome(props) {
+      props.history.push('/');
+    }
   }
 }
